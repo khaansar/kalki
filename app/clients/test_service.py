@@ -3,7 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, ValidationError
 from pydantic.alias_generators import to_camel
 
-from app.clients.base import ServiceClient, ServiceUnavailable
+from app.clients.base import ServiceClient, ServiceUnavailable, service_url
 from app.config import Settings
 
 
@@ -43,7 +43,7 @@ class Blueprint(BlueprintModel):
 class TestServiceClient(ServiceClient):
     def __init__(self, settings: Settings, timeout: float | None = None) -> None:
         super().__init__(
-            f"{settings.test_service_url}/tests-api",
+            service_url(settings.test_service_url, "/tests-api"),
             settings,
             timeout or settings.live_request_timeout_seconds,
         )

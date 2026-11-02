@@ -1,6 +1,6 @@
 from itertools import batched
 
-from app.clients.base import ServiceClient
+from app.clients.base import ServiceClient, service_url
 from app.config import Settings
 
 CHECK_BATCH_LIMIT = 200
@@ -9,7 +9,7 @@ CHECK_BATCH_LIMIT = 200
 class PaymentServiceClient(ServiceClient):
     def __init__(self, settings: Settings) -> None:
         super().__init__(
-            f"{settings.payment_service_url}/payments-api",
+            service_url(settings.payment_service_url, "/payments-api"),
             settings,
             settings.live_request_timeout_seconds,
         )

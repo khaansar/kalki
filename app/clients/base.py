@@ -5,6 +5,11 @@ import httpx
 from app.config import Settings
 
 
+def service_url(base_url: str, context_path: str) -> str:
+    base = base_url.rstrip("/")
+    return base if base.endswith(context_path) else f"{base}{context_path}"
+
+
 class ServiceUnavailable(Exception):
     pass
 
