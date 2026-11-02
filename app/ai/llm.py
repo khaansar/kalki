@@ -68,8 +68,14 @@ class OpenAiLlm:
         original: tuple[str, list[dict[str, str]]],
         rewritten: tuple[str, list[dict[str, str]]],
     ) -> MeaningVerdict:
-        content = f"Original: {format_question(*original)}\nRewrite: {format_question(*rewritten)}"
-        return self._ask(MeaningVerdict, MEANING_PROMPT, content)
+        content = render(
+            "meaning",
+            original_text=original[0],
+            original_options=original[1],
+            rewritten_text=rewritten[0],
+            rewritten_options=rewritten[1],
+        )
+        return self._ask(MeaningVerdict, "meaning_system", content)
 
     def _ask[T: BaseModel](self, schema: type[T], system_template: str, content: str) -> T:
         structured = self._model.with_structured_output(schema, include_raw=True)
