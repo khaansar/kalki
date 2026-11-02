@@ -1,0 +1,5 @@
+Question: {{ text }}
+Options:
+{% for option in options -%}
+{{ option.key }}: {{ option.text }}
+{% endfor %}
