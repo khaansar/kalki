@@ -20,6 +20,7 @@ class PromptOut(ApiModel):
 
 
 class NextOut(ApiModel):
+    visible: bool
     prompt: PromptOut | None
 
 

@@ -25,11 +25,15 @@ All endpoints need the gateway's service headers and `X-User-Id`.
 
 | Endpoint | Does |
 |---|---|
-| `GET /companion-api/next` | Returns a question without its answer, or `{"prompt": null}` |
+| `GET /companion-api/next` | Returns `visible` and a question without its answer, or `"prompt": null` |
 | `POST /companion-api/prompts/{id}/answer` | Marks `{"selectedOption": "A"}` and returns the result |
 | `POST /companion-api/prompts/{id}/skip` | Records a skip and increases the wait |
 | `GET /companion-api/settings` | Reads sleep and hide state |
 | `PUT /companion-api/settings` | Takes `{"sleepMinutes": 60}` (`0` wakes) and `{"hidden": true}` |
+
+`visible` is false only when Kalki is switched off for the student, they hid him or put him to
+sleep, a test is running, or the running-test check failed. Otherwise he strolls along the bottom
+of the screen, with or without a question.
 
 ## Local setup
 

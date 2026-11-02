@@ -37,8 +37,9 @@ def to_settings_out(state: UserSettings) -> SettingsOut:
 
 @router.get("/next", response_model=NextOut, response_model_by_alias=True)
 def next_prompt(user_id: UserId, companion: Companion) -> NextOut:
-    prompt = companion.next_prompt(user_id)
-    return NextOut(prompt=to_prompt_out(prompt) if prompt else None)
+    result = companion.next_prompt(user_id)
+    prompt = to_prompt_out(result.prompt) if result.prompt else None
+    return NextOut(visible=result.visible, prompt=prompt)
 
 
 @router.post("/prompts/{prompt_id}/answer", response_model=AnswerOut)
