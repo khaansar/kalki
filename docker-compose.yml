@@ -1,0 +1,37 @@
+services:
+  kalki-api:
+    build: .
+    image: kalki:local
+    container_name: kalki-api
+    restart: unless-stopped
+    command: sh -c "alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - backend-network
+
+  kalki-worker:
+    image: kalki:local
+    container_name: kalki-worker
+    restart: unless-stopped
+    command: python -m app.worker.main
+    env_file:
+      - .env
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: baahubali-kafka:29092
+    networks:
+      - backend-network
+    depends_on:
+      kalki-api:
+        condition: service_healthy
+
+networks:
+  backend-network:
+    external: true
+    name: ${BAAHUBALI_NETWORK:-backend_backend-network}

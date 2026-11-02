@@ -43,6 +43,17 @@ uv run uvicorn app.main:app --reload
 uv run python -m app.worker.main
 ```
 
+### With Docker
+
+Start baahubali first, because Kalki joins its Docker network. Kalki has no database container: it
+connects to TiDB using the `MYSQL_*` values in `.env`.
+
+```bash
+docker compose up -d --build
+```
+
+Set `BAAHUBALI_NETWORK` if baahubali's network is not `backend_backend-network`.
+
 ## Database
 
 Kalki uses its own `kalki` database and user on the TiDB cluster that baahubali uses. Create them
