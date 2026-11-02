@@ -60,13 +60,13 @@ Set `BAAHUBALI_NETWORK` if baahubali's network is not `backend_backend-network`.
 
 ## Database
 
-Kalki uses its own `kalki` database and user on the TiDB cluster that baahubali uses. Create them
+Kalki uses its own `kalki_db` database and `kalki` user on the TiDB cluster that baahubali uses. Create them
 once before the first deploy. Migrations run when `kalki-api` starts.
 
 ```sql
-CREATE DATABASE kalki;
+CREATE DATABASE kalki_db;
 CREATE USER 'kalki'@'%' IDENTIFIED BY '<password>';
-GRANT ALL ON kalki.* TO 'kalki'@'%';
+GRANT ALL ON kalki_db.* TO 'kalki'@'%';
 ```
 
 On TiDB Cloud Serverless, usernames carry the cluster prefix, so set `KALKI_MYSQL_USER` to match.

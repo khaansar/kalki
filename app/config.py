@@ -48,7 +48,7 @@ class Settings(BaseSettings):
 
     mysql_host: str = Field(default="localhost", validation_alias="MYSQL_HOST")
     mysql_port: int = Field(default=3306, validation_alias="MYSQL_PORT")
-    mysql_database: str = "kalki"
+    mysql_database: str = "kalki_db"
     mysql_user: str = "kalki"
     mysql_password: SecretStr = Field(min_length=1)
     mysql_tls_enabled: bool = True
