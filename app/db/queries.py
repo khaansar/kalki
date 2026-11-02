@@ -133,7 +133,7 @@ def claim_job(db: Session) -> ReframeJob | None:
         .where(ReframeJob.status == JobStatus.PENDING, ReframeJob.available_at <= utcnow())
         .order_by(ReframeJob.id)
         .limit(1)
-        .with_for_update(skip_locked=True)
+        .with_for_update()
     )
     if job:
         job.status = JobStatus.RUNNING

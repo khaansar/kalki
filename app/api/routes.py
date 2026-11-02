@@ -1,3 +1,4 @@
+from datetime import UTC
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, Response, status
@@ -29,7 +30,7 @@ def to_prompt_out(prompt: Prompt) -> PromptOut:
 def to_settings_out(state: UserSettings) -> SettingsOut:
     return SettingsOut(
         hidden=state.hidden,
-        sleeping_until=state.sleeping_until,
+        sleeping_until=state.sleeping_until.replace(tzinfo=UTC) if state.sleeping_until else None,
         sleep_options_minutes=settings.sleep_options_minutes,
     )
 
